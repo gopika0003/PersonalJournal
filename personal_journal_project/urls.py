@@ -20,3 +20,14 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+from django.contrib import admin
+from django.urls import path, include
+from django.shortcuts import redirect
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', lambda request: redirect('login')),  # Redirects '/' to '/login/'
+    path('', include('authentication.urls')),  
+]
+
