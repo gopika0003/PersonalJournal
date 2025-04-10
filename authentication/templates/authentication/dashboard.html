@@ -8,17 +8,15 @@
 
 <!-- Custom Styles -->
 <style>
-    /* Set clean white background */
     body {
         background-color: white;
         margin: 0;
         padding: 0;
     }
 
-    /* Navbar */
     .navbar {
         width: 100%;
-        background-color: pink; /* Pink navbar */
+        background-color: pink;
         padding: 15px;
         display: flex;
         justify-content: space-between;
@@ -38,7 +36,6 @@
         margin-left: 15px;
     }
 
-    /* Logout button */
     .btn-logout {
         background-color: maroon;
         color: white;
@@ -54,7 +51,6 @@
         background-color: darkred;
     }
 
-    /* Dashboard container */
     .dashboard-container {
         width: 60%;
         max-width: 800px;
@@ -63,15 +59,14 @@
         border-radius: 10px;
         box-shadow: 0px 0px 15px rgba(247, 17, 101, 0.9);
         text-align: center;
-        margin: 100px auto 0; /* Pushed below navbar */
+        margin: 100px auto 0;
     }
 
     .dashboard-container h2 {
         font-weight: bold;
-        color: maroon; /* Maroon title */
+        color: maroon;
     }
 
-    /* Buttons */
     .btn-container {
         margin-top: 20px;
         display: flex;
@@ -94,7 +89,6 @@
         background-color: darkred;
     }
 
-    /* Search Bar */
     .search-container {
         margin-top: 20px;
         text-align: center;
@@ -130,7 +124,7 @@
         <a href="#">Personal Journal</a>
     </div>
     <div>
-        <a href="{% url 'logout' %}" class="btn-logout">Logout</a>  <!-- Logout button now functional -->
+        <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
     </div>
 </nav>
 
@@ -138,13 +132,13 @@
 <div class="dashboard-container">
     <h2>Welcome to Your Personal Journal</h2>
 
-    <!-- Buttons for Features (UI Only) -->
+    <!-- Buttons that redirect to pages -->
     <div class="btn-container">
-        <button class="btn-primary">📝 New Entry</button>
-        <button class="btn-primary">📜 View Entries</button>
+        <a href="{% url 'new_entry' %}" class="btn-primary">📝 New Entry</a>
+        <a href="{% url 'view_entries' %}" class="btn-primary">📜 View Entries</a>
     </div>
 
-    <!-- Search Bar (UI Only) -->
+    <!-- Search Bar -->
     <div class="search-container">
         <input type="text" class="search-bar" placeholder="🔍 Search journal entries...">
         <button class="search-button">Search</button>
