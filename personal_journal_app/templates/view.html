@@ -2,11 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Page</title>
+    <title>View Journal Entries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://i.pinimg.com/736x/72/c3/91/72c391bdc84e2e6b8bd9ace4ca4f0552.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .entry {
+            background: rgba(254, 244, 249, 0.95);
+            border-left: 5px solid pink;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(247, 17, 101, 0.2);
+        }
+
+        .entry-title {
+            color: maroon;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .entry-title:hover {
+            text-decoration: underline;
+        }
+
+        .entry-date {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 10px;
+        }
+
+        .entry-content {
+            font-size: 16px;
+        }
+
+        .entry-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-delete, .btn-favorite, .btn-back {
+            padding: 5px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background-color: darkred;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: crimson;
+        }
+
+        .btn-favorite {
+            background-color: maroon;
+            color: white;
+        }
+
+        .btn-favorite:hover {
+            background-color: #8b0000;
+        }
+
+        .btn-back {
+            background-color: maroon;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #8b0000;
+        }
+
+        .date-filter {
+            margin-bottom: 20px;
+        }
+
+        .date-filter input[type="date"] {
+            padding: 8px;
+            border: 2px solid maroon;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .date-filter button {
+            padding: 8px 15px;
+            border: none;
+            background-color: maroon;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .date-filter button:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the View Page</h1>
-    <p>This is the content of the view page.</p>
+
+    <!-- Header with Back Button -->
+    <div class="header">
+        <h1>📜 Your Journal Entries</h1>
+        <a href="{% url 'dashboard' %}" class="btn-back">← Back to Dashboard</a>
+    </div>
+
+    <!-- Date Search Form -->
+    <form method="get" class="date-filter text-center">
+        <input type="date" name="date" value="{{ request.GET.date }}">
+        <button type="submit">🔍 Search by Date</button>
+    </form>
+
+    {% if entries %}
+        {% for entry in entries %}
+            <div class="entry">
+                <a href="{% url 'entry_detail' entry.id %}" class="entry-title">{{ entry.title }}</a>
+                <div class="entry-date">{{ entry.created_at|date:"F d, Y – h:i A" }}</div>
+                <div class="entry-content">{{ entry.content|truncatewords:30 }}</div>
+
+                <div class="entry-actions">
+                    <form method="POST" action="{% url 'delete_entry' entry.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">🗑️ Delete</button>
+                    </form>
+
+                    <form method="POST" action="{% url 'toggle_favorite' entry.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-favorite">
+                            {% if entry.is_favorite %}
+                                ⭐ Unmark Favorite
+                            {% else %}
+                                ☆ Mark as Favorite
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No entries found{% if request.GET.date %} for the selected date{% endif %}.</p>
+    {% endif %}
 </body>
 </html>

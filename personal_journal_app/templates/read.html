@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read Entry - Personal Journal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://i.pinimg.com/736x/72/c3/91/72c391bdc84e2e6b8bd9ace4ca4f0552.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-left: 5px solid pink;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(247, 17, 101, 0.3);
+        }
+
+        h1 {
+            color: maroon;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timestamp {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid maroon;
+            resize: vertical;
+        }
+
+        .btn-save, .btn-back {
+            background-color: maroon;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .btn-back {
+            background-color: gray;
+            text-decoration: none;
+        }
+
+        .btn-save:hover {
+            background-color: darkred;
+        }
+
+        .btn-back:hover {
+            background-color: #555;
+        }
+
+        .edit-icon {
+            font-size: 18px;
+            color: maroon;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .edit-icon:hover {
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>
+            {% if editable %}
+                <input type="text" name="title" value="{{ entry.title }}" required>
+            {% else %}
+                {{ entry.title }}
+                <a href="?edit=true" class="edit-icon" title="Edit">✏️</a>
+            {% endif %}
+        </h1>
+
+        <div class="timestamp">
+            {{ entry.created_at|date:"F d, Y – h:i A" }}
+        </div>
+
+        {% if editable %}
+            <textarea name="content" rows="10" required>{{ entry.content }}</textarea>
+            <br>
+            <button type="submit" class="btn-save">💾 Save Changes</button>
+        {% else %}
+            <p>{{ entry.content|linebreaks }}</p>
+        {% endif %}
+
+        <a href="{% url 'view_entries' %}" class="btn-back">← Back to Entries</a>
+    </form>
+</div>
+
+</body>
+</html>
