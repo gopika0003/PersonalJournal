@@ -1,30 +1,41 @@
+
 pipeline {
     agent any
+
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    credentialsId: 'journalID', 
-                    url: 'https://github.com/gopika0003/PersonalJournal.git'
+                echo 'Checking out code...'
+                checkout([ 
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    extensions: [], 
+                    userRemoteConfigs: [[ 
+                        url: 'https://github.com/gopika0003/PersonalJournal.git', 
+                        credentialsId: 'journalID' 
+                    ]] 
+                ])
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Building project...'
-        bat '"C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" -m venv venv'
-        bat 'venv\\Scripts\\pip install -r requirements.txt'
+                echo 'Building Docker Compose services...'
+                bat 'docker-compose -p personaljourna build'
             }
         }
-        stage('Run Tests') {
-            steps {
-                echo 'Running tests...'
-                // Add test execution commands here
-            }
-        }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
-                // Add deployment steps here
+                echo 'Deploying the application using Docker Compose...'
+                bat 'docker-compose -p personaljournal up -d'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                echo 'Running unit tests...'
+                bat 'docker-compose -p personaljourna run --rm web pytest tests/'
             }
         }
     }

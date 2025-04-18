@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=av^nbn*$idjwl&7v@lh*h=zt))zq_m)^650b13+r2@th30vp!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']
 
 
 # Application definition
@@ -75,17 +75,16 @@ WSGI_APPLICATION = 'personal_journal_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'journal_db',
-        'USER': 'journal_admin',
-        'PASSWORD': 'journalpass',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'journal_db'),  # Database name
+        'USER': os.getenv('DB_USER', 'journal_admin'),  # PostgreSQL username
+        'PASSWORD': os.getenv('DB_PASSWORD', 'journalpass'),  # Password for the database user
+        'HOST': os.getenv('DB_HOST', 'db'),  # Use 'db' as the hostname for Docker Compose
+        'PORT': os.getenv('DB_PORT', '5432'),  # Port where PostgreSQL is running 
+            }
     }
-}
 
 
 # Password validation
