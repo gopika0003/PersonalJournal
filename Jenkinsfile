@@ -11,10 +11,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project...'
-               // Create a virtual environment
-                sh 'python -m venv venv'
+              // Create a virtual environment
+                bat 'python -m venv venv'
                 // Activate the virtual environment and install dependencies
-                sh './venv/bin/pip install -r requirements.txt'
+                bat 'venv\\Scripts\\pip install -r requirements.txt'
             }
         }
         stage('Run Tests') {
