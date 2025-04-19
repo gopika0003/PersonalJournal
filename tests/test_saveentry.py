@@ -6,9 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager  # For automatic ChromeDriver setup
-import os 
 
-class TestSavingEntry:
+class TestSaveentry:
     def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run in headless mode
@@ -23,9 +22,9 @@ class TestSavingEntry:
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_savingentry(self):
+    def test_saveentry(self):
         print("🔎 Opening login page...")
-        self.driver.get("http://web:8000/auth/login/")  # Ensure the correct URL is used
+        self.driver.get("http://localhost:8000/auth/login/")  # Ensure the correct URL is used
         self.driver.set_window_size(1050, 652)
 
         print("🧪 Entering username...")
@@ -37,7 +36,7 @@ class TestSavingEntry:
         password_input.send_keys("admin1")  # Using hardcoded credentials for testing
 
         print("🚀 Clicking login button...")
-        login_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-login")
+        login_button = self.driver.find_element(By.CSS_SELECTOR, ".btn")
         login_button.click()
 
         print("🔗 Navigating to 'New Entry' page...")
@@ -46,10 +45,10 @@ class TestSavingEntry:
 
         print("📝 Filling out the entry form...")
         title_input = self.wait.until(EC.presence_of_element_located((By.ID, "title")))
-        title_input.send_keys("A good day!")
+        title_input.send_keys("good day")
 
         content_input = self.driver.find_element(By.ID, "content")
-        content_input.send_keys("Today it was so calm and happy day.")
+        content_input.send_keys("today it was a happy day.")
 
         print("🚀 Submitting the entry...")
         submit_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-submit")
