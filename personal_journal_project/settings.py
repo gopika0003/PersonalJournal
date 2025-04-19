@@ -130,13 +130,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'journal_db',
-        'USER': 'journal_admin',
-        'PASSWORD': 'journalpass',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+

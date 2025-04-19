@@ -21,21 +21,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Docker Compose services...'
-                bat 'docker-compose -p personaljourna build'
+                bat 'docker-compose -p personaljournalproject build'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying the application using Docker Compose...'
-                bat 'docker-compose -p personaljournal up -d'
+                bat 'docker-compose -p personaljournalproject up -d'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Running unit tests...'
-                bat 'docker-compose -p personaljourna run --rm web pytest tests/'
+                bat 'docker-compose -p personaljournalproject run --rm web pytest tests/'
             }
         }
     }
