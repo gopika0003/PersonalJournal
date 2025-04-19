@@ -25,7 +25,7 @@ class TestCorrectcredentials:
 
     def test_correctcredentials(self):
         print("🔎 Opening login page...")
-        self.driver.get("http://localhost:8000/auth/login/")  # Ensure the correct URL is used
+        self.driver.get("http://web:8000/auth/login/")  # Ensure the correct URL is used
         self.driver.set_window_size(1050, 652)
 
         print("🧪 Entering username...")
