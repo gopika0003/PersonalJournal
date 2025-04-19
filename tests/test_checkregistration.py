@@ -51,7 +51,7 @@ class TestCheckRegistration:
         print("⏳ Waiting for dashboard or confirmation page...")
         try:
             confirmation_element = self.wait.until(
-                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'welcome to your personal journal')]"))
+                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'dashboard')]"))
             )
             print("✅ Successfully registered and redirected.")
         except Exception as e:
