@@ -40,20 +40,42 @@ class TestSavingEntry:
         login_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-login")
         login_button.click()
 
+        print("⏳ Waiting for dashboard to load...")
+        try:
+            dashboard_element = self.wait.until(
+                EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Dashboard')]"))
+            )
+            print("✅ Dashboard loaded successfully.")
+        except Exception as e:
+            print("❌ Dashboard did not load. Login might have failed.")
+            raise e
+
         print("🔗 Navigating to 'New Entry' page...")
-        new_entry_link = self.wait.until(EC.presence_of_element_located((By.LINK_TEXT, "📝 New Entry")))
-        new_entry_link.click()
+        try:
+            new_entry_link = self.wait.until(EC.presence_of_element_located((By.LINK_TEXT, "📝 New Entry")))
+            new_entry_link.click()
+        except Exception as e:
+            print("❌ 'New Entry' link not found.")
+            raise e
 
         print("📝 Filling out the entry form...")
-        title_input = self.wait.until(EC.presence_of_element_located((By.ID, "title")))
-        title_input.send_keys("A good day!")
+        try:
+            title_input = self.wait.until(EC.presence_of_element_located((By.ID, "title")))
+            title_input.send_keys("A good day!")
 
-        content_input = self.driver.find_element(By.ID, "content")
-        content_input.send_keys("Today it was a good day.")
+            content_input = self.driver.find_element(By.ID, "content")
+            content_input.send_keys("Today it was a good day.")
+        except Exception as e:
+            print("❌ Failed to fill out the entry form.")
+            raise e
 
         print("🚀 Submitting the entry...")
-        submit_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-submit")
-        submit_button.click()
+        try:
+            submit_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-submit")
+            submit_button.click()
+        except Exception as e:
+            print("❌ Failed to submit the entry.")
+            raise e
 
         print("⏳ Waiting for confirmation message...")
         try:
