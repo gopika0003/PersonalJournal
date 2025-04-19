@@ -129,6 +129,15 @@
         <a href="{% url 'dashboard' %}" class="btn-back">← Back to Dashboard</a>
     </div>
 
+    <!-- Display Success Message -->
+    {% if messages %}
+        <div class="alert alert-success" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!-- Date Search Form -->
     <form method="get" class="date-filter text-center">
         <input type="date" name="date" value="{{ request.GET.date }}">

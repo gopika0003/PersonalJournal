@@ -1,9 +1,9 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import JournalEntryForm
 from .models import JournalEntry
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-
 
 # Dashboard View
 @login_required
@@ -85,6 +85,7 @@ def delete_entry(request, entry_id):
     entry = get_object_or_404(JournalEntry, id=entry_id, user=request.user)
     if request.method == 'POST':
         entry.delete()
+        messages.success(request, 'Entry deleted successfully!')  # Success message
     return redirect('view_entries')
 
 
