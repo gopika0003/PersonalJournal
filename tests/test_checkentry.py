@@ -22,7 +22,7 @@ class TestCheckEntry:
 
     def test_checkentry(self):
         print("🔐 Logging in...")
-        self.driver.get("http://localhost:8000/auth/login/")
+        self.driver.get("http://web:8000/auth/login/")
         self.driver.set_window_size(1050, 652)
 
         username_input = self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
