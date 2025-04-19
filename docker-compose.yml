@@ -43,5 +43,21 @@ services:
     depends_on:
       - db
 
-volumes:
-  postgres_data:
+  pytest: 
+    image: python:3.9 # Use Python base image
+    volumes:
+      - .:/app
+    command: >
+      bash -c "pip install pytest && pytest"
+    depends_on:
+      - db
+      - web
+    networks:
+      - my-network
+
+  volumes:
+    postgres_data:
+
+  networks:
+    my-network:
+     driver: bridge
