@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager  # For automatic ChromeDriver setup
-import os  # For handling environment variables
+import os 
 
 class TestSavingEntry:
     def setup_method(self, method):
