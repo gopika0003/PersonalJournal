@@ -29,7 +29,7 @@ class TestSavingEntry:
 
         print("🧪 Entering username...")
         username_input = self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
-        username_input.send_keys("admin1")
+        username_input.send_keys("admin")
 
         print("🧪 Entering password...")
         password_input = self.driver.find_element(By.NAME, "password")
