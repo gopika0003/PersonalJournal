@@ -24,39 +24,39 @@ class TestCheckRegistration:
         self.driver.quit()
 
     def test_check_registration(self):
-        print("🔎 Opening login page...")
+        print(" Opening login page...")
         self.driver.get("http://web:8000/auth/login/")
         self.driver.set_window_size(1050, 652)
 
-        print("🚀 Clicking 'Sign Up' link...")
+        print(" Clicking 'Sign Up' link...")
         signup_link = self.wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Sign Up")))
         signup_link.click()
 
-        print("🧪 Entering username...")
+        print("Entering username...")
         username_input = self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
         username_input.send_keys(os.getenv("TEST_NEW_USERNAME", "newuser"))
 
-        print("🧪 Entering email...")
+        print(" Entering email...")
         email_input = self.driver.find_element(By.NAME, "email")
         email_input.send_keys(os.getenv("TEST_NEW_EMAIL", "newuser@gmail.com"))
 
-        print("🧪 Entering password...")
+        print(" Entering password...")
         password_input = self.driver.find_element(By.NAME, "password")
         password_input.send_keys(os.getenv("TEST_NEW_PASSWORD", "newuser1"))
 
-        print("🚀 Clicking 'Register' button...")
+        print(" Clicking 'Register' button...")
         register_button = self.driver.find_element(By.CSS_SELECTOR, ".btn-register")
         register_button.click()
 
-        print("⏳ Waiting for dashboard or confirmation page...")
+        print(" Waiting for dashboard or confirmation page...")
         try:
             confirmation_element = self.wait.until(
                 EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Dashboard')]"))
             )
-            print("✅ Successfully registered and redirected.")
+            print(" Successfully registered and redirected.")
         except Exception as e:
-            print("❌ Registration failed or confirmation page not loaded.")
+            print(" Registration failed or confirmation page not loaded.")
             raise e
 
-        assert confirmation_element is not None, "❌ Confirmation element not found. Registration might have failed."
-        print("✅ Registration test passed.")
+        assert confirmation_element is not None, "Confirmation element not found. Registration might have failed."
+        print(" Registration test passed.")

@@ -22,32 +22,32 @@ class TestLogout:
         self.driver.quit()
 
     def test_logout(self):
-        print("🔐 Navigating to login page...")
+        print("Navigating to login page...")
         self.driver.get("http://web:8000/auth/login/")
         self.driver.set_window_size(1050, 652)
 
-        print("👤 Entering username...")
+        print("Entering username...")
         username_input = self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
         username_input.send_keys("admin")
 
-        print("🔑 Entering password...")
+        print("Entering password...")
         password_input = self.driver.find_element(By.NAME, "password")
         password_input.send_keys("admin1")
 
-        print("➡️ Clicking login button...")
+        print(" Clicking login button...")
         login_button = self.driver.find_element(By.CSS_SELECTOR, ".btn")
         login_button.click()
 
-        print("📄 Waiting for dashboard to load...")
+        print(" Waiting for dashboard to load...")
         self.wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Logout")))
 
-        print("🚪 Clicking logout...")
+        print(" Clicking logout...")
         logout_link = self.driver.find_element(By.LINK_TEXT, "Logout")
         logout_link.click()
 
-        print("🔄 Verifying redirect to login page...")
+        print(" Verifying redirect to login page...")
         self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
 
         current_url = self.driver.current_url
-        print(f"✅ Successfully redirected to login page: {current_url}")
-        assert "login" in current_url.lower(), f"❌ Expected to be on login page, got: {current_url}"
+        print(f"Successfully redirected to login page: {current_url}")
+        assert "login" in current_url.lower(), f" Expected to be on login page, got: {current_url}"

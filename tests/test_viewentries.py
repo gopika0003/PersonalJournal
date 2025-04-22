@@ -22,29 +22,29 @@ class TestViewEntries:
         self.driver.quit()
 
     def test_viewentries(self):
-        print("🔐 Opening login page...")
+        print(" Opening login page...")
         self.driver.get("http://web:8000/auth/login/")
         self.driver.set_window_size(1050, 652)
 
-        print("🧪 Entering credentials...")
+        print(" Entering credentials...")
         username = self.wait.until(EC.presence_of_element_located((By.NAME, "username")))
         username.send_keys("admin")
         password = self.driver.find_element(By.NAME, "password")
         password.send_keys("admin1")
 
-        print("🚀 Logging in...")
+        print(" Logging in...")
         self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
-        print("📂 Clicking on 'View Entries'...")
+        print(" Clicking on 'View Entries'...")
         view_entries_link = self.wait.until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "📜 View Entries"))
+            EC.element_to_be_clickable((By.LINK_TEXT, " View Entries"))
         )
         view_entries_link.click()
 
-        print("⏳ Waiting for entries to load...")
+        print(" Waiting for entries to load...")
         entries_loaded = self.wait.until(
             EC.presence_of_element_located((By.CLASS_NAME, "entry"))
         )
 
-        assert entries_loaded is not None, "❌ No entries found!"
-        print("✅ Entries displayed successfully.")
+        assert entries_loaded is not None, " No entries found!"
+        print(" Entries displayed successfully.")
